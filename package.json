@@ -5,6 +5,9 @@
   "repository": "https://github.com/invakid404/sveltekit-islands.git",
   "author": "Tsvetomir Bonev <invakid404@riseup.net>",
   "license": "Unlicense",
+  "scripts": {
+    "build": "./node_modules/.bin/tsc"
+  },
   "devDependencies": {
     "@types/node": "^20.6.1",
     "prettier": "^3.0.3",
