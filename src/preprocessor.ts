@@ -7,10 +7,15 @@ import {
   MustacheTag,
   TemplateNode,
 } from "svelte/types/compiler/interfaces";
+import crypto from "crypto";
 
 export const islandsPreprocessor = (): PreprocessorGroup => {
   return {
     markup({ content, filename }) {
+      if (filename == null) {
+        return;
+      }
+
       return {
         code: modifySvelteMarkup(content, (strippedContent, ast) => {
           const newContent = new MagicString(strippedContent);
@@ -41,9 +46,12 @@ export const islandsPreprocessor = (): PreprocessorGroup => {
             }
 
             const componentName = componentExpression.name;
-            console.log(
-              node,
-              componentName,
+
+            const islandId = buildIslandId(filename, node);
+
+            newContent.appendRight(
+              componentAttribute.end,
+              ` islandId="${islandId}"`,
             );
           });
 
@@ -63,3 +71,6 @@ const isMustacheTag = (value: unknown): value is MustacheTag =>
   value != null &&
   "type" in value &&
   value.type === "MustacheTag";
+
+const buildIslandId = (filename: string, node: Element) =>
+  crypto.createHash("sha256").update(`${filename}:${node.start}`).digest("hex");
