@@ -1,6 +1,7 @@
 import type { Plugin, ResolvedConfig } from "vite";
 import { ISLAND_MODULE_PREFIX } from "./modules.js";
 import path from "path";
+import { viteStaticCopy } from "vite-plugin-static-copy";
 
 export const islandsPlugin = (): Plugin[] => {
   let resolvedConfig: ResolvedConfig;
@@ -54,5 +55,14 @@ export const islandsPlugin = (): Plugin[] => {
 				`;
       },
     },
+    ...viteStaticCopy({
+      targets: [
+        {
+          src: "node_modules/@11ty/is-land/is-land.js",
+          dest: "__islands",
+        },
+      ],
+      silent: true,
+    }),
   ];
 };
