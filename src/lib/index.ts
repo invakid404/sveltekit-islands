@@ -1,3 +1,3 @@
-import Island from "./Island.svelte";
+import Island from './Island.svelte';
 
 export { Island };
