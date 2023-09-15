@@ -1,5 +1,5 @@
 import type { Plugin, ResolvedConfig, UserConfig } from 'vite';
-import { ISLAND_MODULE_PATTERN, ISLAND_MODULE_PREFIX } from './modules.js';
+import { ISLAND_MODULE_PATTERN, ISLAND_MODULE_PREFIX, SVELTE_CHUNK } from './modules.js';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { isNotNullish } from './helpers/isNotNullish.js';
 import path from 'path';
@@ -20,6 +20,11 @@ export const islandsPlugin = (): Plugin[] => {
 								manualChunks(id, meta) {
 									if (resolvedConfig.command !== 'build') {
 										return;
+									}
+
+									const svelte = path.join(resolvedConfig.root, 'node_modules', 'svelte');
+									if (id.startsWith(svelte)) {
+										return 'svelte';
 									}
 
 									if (id.startsWith(`\0${ISLAND_MODULE_PREFIX}`)) {
@@ -54,6 +59,13 @@ export const islandsPlugin = (): Plugin[] => {
 				return `\0${ISLAND_MODULE_PREFIX}:${componentName}:${resolvedImportPath}`;
 			},
 			load(id) {
+				// HACK: in dev mode, there's nothing to replace the svelte chunk
+				//       magic string, so Vite will try to resolve it. Return an
+				//       empty string for it so that it stops looking.
+				if (id === `/${SVELTE_CHUNK}`) {
+					return '';
+				}
+
 				if (!id.startsWith(`\0${ISLAND_MODULE_PREFIX}`)) {
 					return;
 				}
@@ -72,28 +84,41 @@ export const islandsPlugin = (): Plugin[] => {
 			async generateBundle(options, bundle) {
 				const bundleEntries = Object.entries(bundle);
 
-				const componentNameToChunk = Object.fromEntries(
-					bundleEntries
-						.map(([filename, node]) => {
-							if (node.type !== 'chunk') {
-								return;
-							}
+				const target = path.basename(options.dir!);
+				const svelteChunk =
+					target === 'server'
+						? SVELTE_CHUNK
+						: bundleEntries.find(([filename]) => path.basename(filename).startsWith('svelte'))?.[0];
 
-							const islandModule = node.moduleIds.find((moduleId) =>
-								moduleId.startsWith(`\0${ISLAND_MODULE_PREFIX}`)
-							);
-							if (islandModule == null) {
-								return;
-							}
+				if (svelteChunk == null) {
+					throw new Error('Failed to find Svelte chunk');
+				}
 
-							const [componentName] = islandModule
-								.slice(ISLAND_MODULE_PREFIX.length + 2)
-								.split(':', 1);
+				const componentNameToChunk = {
+					...Object.fromEntries(
+						bundleEntries
+							.map(([filename, node]) => {
+								if (node.type !== 'chunk') {
+									return;
+								}
 
-							return [componentName, filename];
-						})
-						.filter(isNotNullish)
-				);
+								const islandModule = node.moduleIds.find((moduleId) =>
+									moduleId.startsWith(`\0${ISLAND_MODULE_PREFIX}`)
+								);
+								if (islandModule == null) {
+									return;
+								}
+
+								const [componentName] = islandModule
+									.slice(ISLAND_MODULE_PREFIX.length + 2)
+									.split(':', 1);
+
+								return [componentName, filename];
+							})
+							.filter(isNotNullish)
+					),
+					_svelte: svelteChunk
+				};
 
 				for (const [_name, node] of bundleEntries) {
 					if (node.type !== 'chunk') {
@@ -109,8 +134,6 @@ export const islandsPlugin = (): Plugin[] => {
 				// Store information about bundle so that we can retrieve it after
 				// pre-rendering is complete, as we'll need it to replace island
 				// module references with chunks in the HTML as well.
-				const target = path.basename(options.dir!);
-
 				await fs.mkdir(resolvedConfig.cacheDir, { recursive: true });
 				await fs.writeFile(
 					path.join(resolvedConfig.cacheDir, `islands_${target}.json`),

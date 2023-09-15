@@ -1,6 +1,7 @@
 <script lang="ts">
 	import * as devalue from 'devalue';
 	import type { ComponentType } from 'svelte';
+	import { SVELTE_CHUNK } from './modules.js';
 
 	/**
 	 * The component to hydrate
@@ -30,6 +31,7 @@
 		{@html `
 			${'<scr'}ipt type="module">
 				import * as component from "${script}";
+				import "/${SVELTE_CHUNK}";
 
 				const Component = Object.values(component)[0];
 
