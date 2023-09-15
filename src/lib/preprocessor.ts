@@ -1,8 +1,8 @@
 import { modifySvelteMarkup } from "./helpers/modifySvelteMarkup.js";
-import { type PreprocessorGroup } from "svelte/src/compiler/preprocess/public";
+import type { PreprocessorGroup } from "svelte/types/compiler/preprocess";
 import { walkTree } from "./helpers/walkTree.js";
 import MagicString from "magic-string";
-import {
+import type {
   Element,
   MustacheTag,
   TemplateNode,
@@ -11,7 +11,7 @@ import crypto from "crypto";
 import { ISLAND_MODULE_PREFIX } from "./modules.js";
 import * as acorn from "acorn";
 import * as svelte from "svelte/compiler";
-import { type ImportDefaultSpecifier } from "estree";
+import type { ImportDefaultSpecifier } from "estree";
 
 export const islandsPreprocessor = (): PreprocessorGroup => {
   const filenameToIslandModules: Partial<{ [filename: string]: string[] }> = {};

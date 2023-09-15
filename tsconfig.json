@@ -5,7 +5,7 @@
       "ESNext"
     ],
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -18,5 +18,6 @@
   ],
   "exclude": [
     "node_modules/**/*"
-  ]
+  ],
+  "extends": ["./.svelte-kit/tsconfig.json"]
 }

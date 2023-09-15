@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import * as svelte from "svelte/compiler";
-import type { Ast } from "svelte/src/compiler/interfaces";
+import type { Ast } from "svelte/types/compiler/interfaces";
 
 const nonMarkupTagPattern =
   /<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g;
