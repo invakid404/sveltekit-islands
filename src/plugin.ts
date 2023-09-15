@@ -1,8 +1,10 @@
 import type { Plugin, ResolvedConfig, UserConfig } from "vite";
 import { ISLAND_MODULE_PATTERN, ISLAND_MODULE_PREFIX } from "./modules.js";
-import path from "path";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import { isNotNullish } from "./helpers/isNotNullish.js";
+import path from "path";
+import fs from "fs/promises";
+import { walkDir } from "./helpers/walkDir.js";
 
 export const islandsPlugin = (): Plugin[] => {
   let resolvedConfig: ResolvedConfig;
@@ -78,7 +80,7 @@ export const islandsPlugin = (): Plugin[] => {
           }";
 				`;
       },
-      generateBundle(_options, bundle) {
+      async generateBundle(options, bundle) {
         const bundleEntries = Object.entries(bundle);
 
         const componentNameToChunk = Object.fromEntries(
@@ -115,6 +117,71 @@ export const islandsPlugin = (): Plugin[] => {
               `"/${componentNameToChunk[componentName]}"`,
           );
         }
+
+        // Store information about bundle so that we can retrieve it after
+        // pre-rendering is complete, as we'll need it to replace island
+        // module references with chunks in the HTML as well.
+        const target = path.basename(options.dir!);
+
+        await fs.mkdir(resolvedConfig.cacheDir, { recursive: true });
+        await fs.writeFile(
+          path.join(resolvedConfig.cacheDir, `islands_${target}.json`),
+          JSON.stringify(componentNameToChunk),
+        );
+      },
+      writeBundle: {
+        sequential: true,
+        async handler(options) {
+          if (!options.dir?.endsWith("/server")) {
+            return;
+          }
+
+          const [clientChunks, serverChunks] = await Promise.all(
+            ["client", "server"].map(
+              async (target) =>
+                JSON.parse(
+                  await fs.readFile(
+                    path.join(
+                      resolvedConfig.cacheDir,
+                      `islands_${target}.json`,
+                    ),
+                    "utf-8",
+                  ),
+                ) as { [component: string]: string },
+            ),
+          );
+
+          const serverToClientChunk = Object.entries(serverChunks).reduce(
+            (acc, [component, serverChunk]) => {
+              acc[serverChunk] = clientChunks[component];
+
+              return acc;
+            },
+            {} as Record<string, string>,
+          );
+
+          const prerenderedPath = path.resolve(options.dir, "../prerendered");
+          for await (const entry of walkDir(prerenderedPath)) {
+            if (!entry.endsWith(".html")) {
+              continue;
+            }
+
+            const content = await fs.readFile(entry, "utf-8");
+            const newContent = Object.entries(serverToClientChunk).reduce(
+              (acc, [serverChunk, clientChunk]) => {
+                return acc.replace(serverChunk, clientChunk);
+              },
+              content,
+            );
+
+            if (content === newContent) {
+              continue;
+            }
+
+            console.log("overwriting", entry);
+            await fs.writeFile(entry, newContent, "utf-8");
+          }
+        },
       },
     },
     ...viteStaticCopy({
