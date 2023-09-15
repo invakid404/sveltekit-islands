@@ -57,7 +57,7 @@ export const islandsPreprocessor = (): PreprocessorGroup => {
 
             const islandId = buildIslandId(filename, node);
             const virtualModuleName = `${ISLAND_MODULE_PREFIX}:${componentName}`;
-            const script = `/${virtualModuleName}`;
+            const script = `/${virtualModuleName}:{${componentName}ImportPath}`;
 
             filenameToIslandModules[filename]!.push(virtualModuleName);
 
