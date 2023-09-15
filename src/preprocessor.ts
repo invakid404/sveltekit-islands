@@ -8,6 +8,7 @@ import {
   TemplateNode,
 } from "svelte/types/compiler/interfaces";
 import crypto from "crypto";
+import { ISLAND_MODULE_PREFIX } from "./modules.js";
 
 export const islandsPreprocessor = (): PreprocessorGroup => {
   return {
@@ -48,10 +49,12 @@ export const islandsPreprocessor = (): PreprocessorGroup => {
             const componentName = componentExpression.name;
 
             const islandId = buildIslandId(filename, node);
+            const virtualModuleName = `${ISLAND_MODULE_PREFIX}${componentName}`;
+            const script = `/${virtualModuleName}`;
 
             newContent.appendRight(
               componentAttribute.end,
-              ` islandId="${islandId}"`,
+              ` islandId="${islandId}" script="${script}"`,
             );
           });
 
