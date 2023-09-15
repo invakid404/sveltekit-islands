@@ -1,7 +1,8 @@
 import type { Plugin, ResolvedConfig, UserConfig } from "vite";
-import { ISLAND_MODULE_PREFIX } from "./modules.js";
+import { ISLAND_MODULE_PATTERN, ISLAND_MODULE_PREFIX } from "./modules.js";
 import path from "path";
 import { viteStaticCopy } from "vite-plugin-static-copy";
+import { isNotNullish } from "./helpers/isNotNullish.js";
 
 export const islandsPlugin = (): Plugin[] => {
   let resolvedConfig: ResolvedConfig;
@@ -76,6 +77,44 @@ export const islandsPlugin = (): Plugin[] => {
             resolvedConfig.command === "serve" ? fullImportPath : ""
           }";
 				`;
+      },
+      generateBundle(_options, bundle) {
+        const bundleEntries = Object.entries(bundle);
+
+        const componentNameToChunk = Object.fromEntries(
+          bundleEntries
+            .map(([filename, node]) => {
+              if (node.type !== "chunk") {
+                return;
+              }
+
+              const islandModule = node.moduleIds.find((moduleId) =>
+                moduleId.startsWith(`\0${ISLAND_MODULE_PREFIX}`),
+              );
+              if (islandModule == null) {
+                return;
+              }
+
+              const [componentName] = islandModule
+                .slice(ISLAND_MODULE_PREFIX.length + 2)
+                .split(":", 1);
+
+              return [componentName, filename];
+            })
+            .filter(isNotNullish),
+        );
+
+        for (const [_name, node] of bundleEntries) {
+          if (node.type !== "chunk") {
+            continue;
+          }
+
+          node.code = node.code.replaceAll(
+            ISLAND_MODULE_PATTERN,
+            (_match, componentName) =>
+              `"/${componentNameToChunk[componentName]}"`,
+          );
+        }
       },
     },
     ...viteStaticCopy({
