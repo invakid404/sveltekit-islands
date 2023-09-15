@@ -20,6 +20,7 @@
     "vite": "^4.4.9"
   },
   "dependencies": {
+    "acorn": "^8.10.0",
     "magic-string": "^0.30.3"
   }
 }
