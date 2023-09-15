@@ -177,7 +177,7 @@ export const islandsPlugin = (): Plugin[] => {
 						const content = await fs.readFile(entry, 'utf-8');
 						const newContent = Object.entries(serverToClientChunk).reduce(
 							(acc, [serverChunk, clientChunk]) => {
-								return acc.replace(serverChunk, clientChunk);
+								return acc.replaceAll(serverChunk, clientChunk);
 							},
 							content
 						);
