@@ -1,11 +1,16 @@
 {
   "name": "sveltekit-islands",
   "version": "1.0.0",
-  "main": "./dist/index.js",
   "repository": "https://github.com/invakid404/sveltekit-islands.git",
   "author": "Tsvetomir Bonev <invakid404@riseup.net>",
   "license": "Unlicense",
   "type": "module",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./plugin": "./dist/plugin.js",
+    "./preprocessor": "./dist/preprocessor.js"
+  },
   "files": [
     "dist"
   ],
