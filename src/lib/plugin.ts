@@ -40,12 +40,11 @@ export const islandsPlugin = (): Plugin[] => {
       },
       async resolveId(id, importer) {
         const actualId = id.startsWith("/") ? id.slice("/".length) : id;
-
         if (!actualId.startsWith(`${ISLAND_MODULE_PREFIX}`)) {
           return;
         }
 
-        const [componentName, importPath] = id
+        const [componentName, importPath] = actualId
           .slice(ISLAND_MODULE_PREFIX.length + 1)
           .split(":");
 
@@ -178,7 +177,6 @@ export const islandsPlugin = (): Plugin[] => {
               continue;
             }
 
-            console.log("overwriting", entry);
             await fs.writeFile(entry, newContent, "utf-8");
           }
         },
