@@ -54,7 +54,7 @@ export const islandsPreprocessor = (): PreprocessorGroup => {
             const componentName = componentExpression.name;
 
             const islandId = buildIslandId(filename, node);
-            const virtualModuleName = `${ISLAND_MODULE_PREFIX}${componentName}`;
+            const virtualModuleName = `${ISLAND_MODULE_PREFIX}:${componentName}`;
             const script = `/${virtualModuleName}`;
 
             filenameToIslandModules[filename] ??= [];
@@ -89,7 +89,7 @@ export const islandsPreprocessor = (): PreprocessorGroup => {
 
       const components = new Set(
         islandModules.map((module) =>
-          module.slice(ISLAND_MODULE_PREFIX.length),
+          module.slice(ISLAND_MODULE_PREFIX.length + 1),
         ),
       );
       const componentImportLocations: Partial<{ [component: string]: string }> =
@@ -126,7 +126,7 @@ export const islandsPreprocessor = (): PreprocessorGroup => {
       });
 
       islandModules.forEach((module) => {
-        const componentName = module.slice(ISLAND_MODULE_PREFIX.length);
+        const componentName = module.slice(ISLAND_MODULE_PREFIX.length + 1);
         const componentImport = componentImportLocations[componentName];
         if (componentImport == null) {
           return;

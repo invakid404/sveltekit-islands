@@ -1,1 +1,1 @@
-export const ISLAND_MODULE_PREFIX = "island:";
+export const ISLAND_MODULE_PREFIX = "island";
