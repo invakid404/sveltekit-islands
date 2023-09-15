@@ -11,6 +11,8 @@ import crypto from "crypto";
 import { ISLAND_MODULE_PREFIX } from "./modules.js";
 
 export const islandsPreprocessor = (): PreprocessorGroup => {
+  const filenameToIslandModules: Partial<{ [filename: string]: string[] }> = {};
+
   return {
     markup({ content, filename }) {
       if (filename == null) {
@@ -52,6 +54,9 @@ export const islandsPreprocessor = (): PreprocessorGroup => {
             const virtualModuleName = `${ISLAND_MODULE_PREFIX}${componentName}`;
             const script = `/${virtualModuleName}`;
 
+            filenameToIslandModules[filename] ??= [];
+            filenameToIslandModules[filename]!.push(virtualModuleName);
+
             newContent.appendRight(
               componentAttribute.end,
               ` islandId="${islandId}" script="${script}"`,
@@ -62,7 +67,18 @@ export const islandsPreprocessor = (): PreprocessorGroup => {
         }),
       };
     },
-    script() {},
+    script({ content, filename }) {
+      if (filename == null) {
+        return;
+      }
+
+      const islandModules = filenameToIslandModules[filename];
+      if (!islandModules?.length) {
+        return;
+      }
+
+      console.log(filename, islandModules);
+    },
   };
 };
 
