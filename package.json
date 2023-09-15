@@ -21,6 +21,7 @@
     "vite": "^4.4.9"
   },
   "dependencies": {
+    "@11ty/is-land": "^4.0.0",
     "acorn": "^8.10.0",
     "magic-string": "^0.30.3"
   }
