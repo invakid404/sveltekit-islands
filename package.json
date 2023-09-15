@@ -1,13 +1,14 @@
 {
   "name": "sveltekit-islands",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "repository": "https://github.com/invakid404/sveltekit-islands.git",
   "author": "Tsvetomir Bonev <invakid404@riseup.net>",
   "license": "Unlicense",
   "type": "module",
-  "main": "./dist/index.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "./node_modules/.bin/tsc"
   },
@@ -17,5 +18,8 @@
     "svelte": "^4.2.0",
     "typescript": "^5.2.2",
     "vite": "^4.4.9"
+  },
+  "dependencies": {
+    "magic-string": "^0.30.3"
   }
 }
