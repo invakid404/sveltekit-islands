@@ -9,6 +9,9 @@ import {
 } from "svelte/types/compiler/interfaces";
 import crypto from "crypto";
 import { ISLAND_MODULE_PREFIX } from "./modules.js";
+import * as acorn from "acorn";
+import * as svelte from "svelte/compiler";
+import { type ImportDefaultSpecifier } from "estree";
 
 export const islandsPreprocessor = (): PreprocessorGroup => {
   const filenameToIslandModules: Partial<{ [filename: string]: string[] }> = {};
@@ -77,7 +80,64 @@ export const islandsPreprocessor = (): PreprocessorGroup => {
         return;
       }
 
-      console.log(filename, islandModules);
+      const newContent = new MagicString(content);
+
+      const node = acorn.parse(content, {
+        ecmaVersion: "latest",
+        sourceType: "module",
+      });
+
+      const components = new Set(
+        islandModules.map((module) =>
+          module.slice(ISLAND_MODULE_PREFIX.length),
+        ),
+      );
+      const componentImportLocations: Partial<{ [component: string]: string }> =
+        {};
+
+      // Find imports for all components used in islands
+      svelte.walk(node as never, {
+        enter(node) {
+          if (
+            node.type !== "ImportDeclaration" ||
+            node.source.type !== "Literal"
+          ) {
+            return;
+          }
+
+          const defaultImport = node.specifiers.find(
+            (specifier): specifier is ImportDefaultSpecifier =>
+              specifier.type === "ImportDefaultSpecifier",
+          );
+          if (
+            defaultImport == null ||
+            defaultImport.local.type !== "Identifier"
+          ) {
+            return;
+          }
+
+          const importName = defaultImport.local.name;
+          if (!components.has(importName)) {
+            return;
+          }
+
+          componentImportLocations[importName] = String(node.source.value);
+        },
+      });
+
+      islandModules.forEach((module) => {
+        const componentName = module.slice(ISLAND_MODULE_PREFIX.length);
+        const componentImport = componentImportLocations[componentName];
+        if (componentImport == null) {
+          return;
+        }
+
+        newContent.prepend(
+          `import { Component as _${componentName}, importPath as ${componentName}ImportPath } from "${module}:${componentImport}";`,
+        );
+      });
+
+      return { code: newContent.toString() };
     },
   };
 };
