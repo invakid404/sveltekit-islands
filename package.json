@@ -4,5 +4,9 @@
   "main": "index.js",
   "repository": "https://github.com/invakid404/sveltekit-islands.git",
   "author": "Tsvetomir Bonev <invakid404@riseup.net>",
-  "license": "Unlicense"
+  "license": "Unlicense",
+  "devDependencies": {
+    "@types/node": "^20.6.1",
+    "typescript": "^5.2.2"
+  }
 }
