@@ -1,4 +1,4 @@
-import type { Plugin, ResolvedConfig } from "vite";
+import type { Plugin, ResolvedConfig, UserConfig } from "vite";
 import { ISLAND_MODULE_PREFIX } from "./modules.js";
 import path from "path";
 import { viteStaticCopy } from "vite-plugin-static-copy";
@@ -9,6 +9,29 @@ export const islandsPlugin = (): Plugin[] => {
   return [
     {
       name: "sveltekit-islands",
+      config() {
+        return {
+          build: {
+            rollupOptions: {
+              output: {
+                manualChunks(id, meta) {
+                  if (resolvedConfig.command !== "build") {
+                    return;
+                  }
+
+                  if (id.startsWith(`\0${ISLAND_MODULE_PREFIX}`)) {
+                    const [componentName] = id
+                      .slice(ISLAND_MODULE_PREFIX.length + 2)
+                      .split(":", 1);
+
+                    return componentName;
+                  }
+                },
+              },
+            },
+          },
+        } satisfies Partial<UserConfig>;
+      },
       configResolved(config) {
         resolvedConfig = config;
       },
