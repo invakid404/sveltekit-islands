@@ -22,6 +22,8 @@ export const islandsPreprocessor = (): PreprocessorGroup => {
         return;
       }
 
+      filenameToIslandModules[filename] = [];
+
       return {
         code: modifySvelteMarkup(content, (strippedContent, ast) => {
           const newContent = new MagicString(strippedContent);
@@ -57,7 +59,6 @@ export const islandsPreprocessor = (): PreprocessorGroup => {
             const virtualModuleName = `${ISLAND_MODULE_PREFIX}:${componentName}`;
             const script = `/${virtualModuleName}`;
 
-            filenameToIslandModules[filename] ??= [];
             filenameToIslandModules[filename]!.push(virtualModuleName);
 
             newContent.appendRight(
