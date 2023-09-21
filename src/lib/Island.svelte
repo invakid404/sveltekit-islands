@@ -21,11 +21,11 @@
 	// Allocate an index and increment
 	let idx: number;
 	islandStore.update((store) => {
-		idx = store[islandId] ?? 0;
+		idx = store[islandId!] ?? 0;
 
 		return {
 			...store,
-			[islandId]: (idx + 1) & 2147483647
+			[islandId!]: (idx + 1) & 2147483647
 		};
 	});
 
