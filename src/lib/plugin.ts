@@ -1,6 +1,5 @@
 import type { Plugin, ResolvedConfig, UserConfig } from 'vite';
 import { ISLAND_MODULE_PATTERN, ISLAND_MODULE_PREFIX, SVELTE_CHUNK } from './modules.js';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { isNotNullish } from './helpers/isNotNullish.js';
 import path from 'path';
 import fs from 'fs/promises';
@@ -8,6 +7,8 @@ import { walkDir } from './helpers/walkDir.js';
 
 export const islandsPlugin = (): Plugin[] => {
 	let resolvedConfig: ResolvedConfig;
+
+	let islandReferenceId: string;
 
 	return [
 		{
@@ -40,6 +41,16 @@ export const islandsPlugin = (): Plugin[] => {
 			},
 			configResolved(config) {
 				resolvedConfig = config;
+			},
+			buildStart() {
+				if (!resolvedConfig.build.outDir.endsWith('/client')) {
+					return;
+				}
+
+				islandReferenceId = this.emitFile({
+					type: 'chunk',
+					id: '/node_modules/@11ty/is-land/is-land.js'
+				});
 			},
 			async resolveId(id, importer) {
 				const actualId = id.startsWith('/') ? id.slice('/'.length) : id;
@@ -117,7 +128,8 @@ export const islandsPlugin = (): Plugin[] => {
 							})
 							.filter(isNotNullish)
 					),
-					_svelte: svelteChunk
+					_svelte: svelteChunk,
+					...(target === 'client' && { '_is-land': this.getFileName(islandReferenceId) })
 				};
 
 				for (const [_name, node] of bundleEntries) {
@@ -168,6 +180,8 @@ export const islandsPlugin = (): Plugin[] => {
 						{} as Record<string, string>
 					);
 
+					const islandChunk = clientChunks['_is-land'];
+
 					const prerenderedPath = path.resolve(options.dir, '../prerendered');
 					for await (const entry of walkDir(prerenderedPath)) {
 						if (!entry.endsWith('.html')) {
@@ -175,7 +189,7 @@ export const islandsPlugin = (): Plugin[] => {
 						}
 
 						const content = await fs.readFile(entry, 'utf-8');
-						const newContent = Object.entries(serverToClientChunk).reduce(
+						let newContent = Object.entries(serverToClientChunk).reduce(
 							(acc, [serverChunk, clientChunk]) => {
 								return acc.replaceAll(serverChunk, clientChunk);
 							},
@@ -186,19 +200,17 @@ export const islandsPlugin = (): Plugin[] => {
 							continue;
 						}
 
+						// If the content changed, then this page contains islands, so we
+						// need to inject the `is-land` chunk.
+						newContent = newContent.replace(
+							'</head>',
+							`<script src="${islandChunk}" type="module"></script></head>`
+						);
+
 						await fs.writeFile(entry, newContent, 'utf-8');
 					}
 				}
 			}
-		},
-		...viteStaticCopy({
-			targets: [
-				{
-					src: 'node_modules/@11ty/is-land/is-land.js',
-					dest: '__islands'
-				}
-			],
-			silent: true
-		})
+		}
 	];
 };

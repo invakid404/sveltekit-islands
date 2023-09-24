@@ -34,10 +34,12 @@
 </script>
 
 <svelte:head>
-	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-	{@html `
-		${'<scr'}ipt type="module" src="/__islands/is-land.js"></script>
-	`.trim()}
+	{#if import.meta.env.DEV}
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html `
+			${'<scr'}ipt type="module" src="/node_modules/@11ty/is-land/is-land.js"></script>
+		`.trim()}
+	{/if}
 </svelte:head>
 <is-land id="{fullId}" {...$$restProps}>
 	<svelte:component this="{component}" />
