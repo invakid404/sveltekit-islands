@@ -6,7 +6,6 @@ import fs from 'fs/promises';
 import { walkDir } from './helpers/walkDir.js';
 import { findNodeModule } from '$lib/helpers/findNodeModule.js';
 import isSubdir from 'is-subdir';
-import * as devalue from 'devalue';
 
 const findIslandModule = async (root: string) => {
 	const islandFile = path.join(await findNodeModule(root, '@11ty/is-land'), 'is-land.js');
