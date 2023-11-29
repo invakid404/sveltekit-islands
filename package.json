@@ -21,7 +21,7 @@
 		"release": "node release.js"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "2.1.0",
+		"@sveltejs/adapter-auto": "2.1.1",
 		"@sveltejs/kit": "1.25.0",
 		"@sveltejs/package": "2.2.2",
 		"@types/acorn": "6.0.0",
