@@ -37,7 +37,7 @@
 	{#if import.meta.env.DEV}
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html `
-			${'<scr'}ipt type="module" src="/node_modules/@11ty/is-land/is-land.js"></script>
+			${'<scr'}ipt type="module" src="/island:lib"></script>
 		`.trim()}
 	{/if}
 </svelte:head>
