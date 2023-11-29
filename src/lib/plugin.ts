@@ -4,9 +4,21 @@ import { isNotNullish } from './helpers/isNotNullish.js';
 import path from 'path';
 import fs from 'fs/promises';
 import { walkDir } from './helpers/walkDir.js';
+import { findNodeModule } from '$lib/helpers/findNodeModule.js';
+import isSubdir from 'is-subdir';
+import * as devalue from 'devalue';
+
+const findIslandModule = async (root: string) => {
+	const islandFile = path.join(await findNodeModule(root, '@11ty/is-land'), 'is-land.js');
+
+	return `/${path.relative(root, islandFile)}`;
+};
 
 export const islandsPlugin = (): Plugin[] => {
 	let resolvedConfig: ResolvedConfig;
+
+	let svelteModule: string;
+	let islandModule: string;
 
 	let islandReferenceId: string;
 
@@ -23,8 +35,7 @@ export const islandsPlugin = (): Plugin[] => {
 										return;
 									}
 
-									const svelte = path.join(resolvedConfig.root, 'node_modules', 'svelte');
-									if (id.startsWith(svelte)) {
+									if (isSubdir(svelteModule, id)) {
 										return 'svelte';
 									}
 
@@ -39,23 +50,33 @@ export const islandsPlugin = (): Plugin[] => {
 					}
 				} satisfies Partial<UserConfig>;
 			},
-			configResolved(config) {
+			async configResolved(config) {
 				resolvedConfig = config;
+
+				svelteModule = await findNodeModule(resolvedConfig.root, 'svelte');
 			},
-			buildStart() {
+			async buildStart() {
 				if (!resolvedConfig.build.outDir.endsWith('/client')) {
 					return;
 				}
 
+				islandModule ??= await findIslandModule(resolvedConfig.root);
+
 				islandReferenceId = this.emitFile({
 					type: 'chunk',
-					id: '/node_modules/@11ty/is-land/is-land.js'
+					id: islandModule
 				});
 			},
 			async resolveId(id, importer) {
 				const actualId = id.startsWith('/') ? id.slice('/'.length) : id;
-				if (!actualId.startsWith(`${ISLAND_MODULE_PREFIX}`)) {
+				if (!actualId.startsWith(ISLAND_MODULE_PREFIX)) {
 					return;
+				}
+
+				if (actualId === `${ISLAND_MODULE_PREFIX}:lib`) {
+					islandModule ??= await findIslandModule(resolvedConfig.root);
+
+					return this.resolve(islandModule);
 				}
 
 				const [componentName, importPath] = actualId
