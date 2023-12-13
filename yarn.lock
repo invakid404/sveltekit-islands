@@ -174,10 +174,10 @@
   dependencies:
     import-meta-resolve "^4.0.0"
 
-"@sveltejs/kit@1.29.0":
-  version "1.29.0"
-  resolved "https://registry.npmjs.org/@sveltejs/kit/-/kit-1.29.0.tgz#ea32c81edf9f9bae696b502ac1f1caf4ce20a898"
-  integrity sha512-O+DvB67Ouha0pVKh0nRxr8QwZcls8h4knLoS6Sk1DhRLAuQzuM0FNnPNIhMHL1iP1LFeXd3P+bk+h2V07WSF5w==
+"@sveltejs/kit@1.30.3":
+  version "1.30.3"
+  resolved "https://registry.npmjs.org/@sveltejs/kit/-/kit-1.30.3.tgz#3e1d57283352bcc6900592171139f1ff97d4e85f"
+  integrity sha512-0DzVXfU4h+tChFvoc8C61IqErCyskD4ydSIDjpKS2lYlEzIYrtYrY7juSqACFxqcvZAnOEXvSY+zZ8br0+ZMMg==
   dependencies:
     "@sveltejs/vite-plugin-svelte" "^2.5.0"
     "@types/cookie" "^0.5.1"
