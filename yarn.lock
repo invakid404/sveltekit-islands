@@ -167,10 +167,10 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.23.tgz#498e41218ab3b6a1419c735e5c6ae2c5ed609b6c"
   integrity sha512-C16M+IYz0rgRhWZdCmK+h58JMv8vijAA61gmz2rspCSwKwzBebpdcsiUmwrtJRdphuY30i6BSLEOP8ppbNLyLg==
 
-"@sveltejs/adapter-auto@2.1.1":
-  version "2.1.1"
-  resolved "https://registry.npmjs.org/@sveltejs/adapter-auto/-/adapter-auto-2.1.1.tgz#e055c71bdb8d2923d63db089752675f70ab1a0f3"
-  integrity sha512-nzi6x/7/3Axh5VKQ8Eed3pYxastxoa06Y/bFhWb7h3Nu+nGRVxKAy3+hBJgmPCwWScy8n0TsstZjSVKfyrIHkg==
+"@sveltejs/adapter-auto@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/@sveltejs/adapter-auto/-/adapter-auto-3.0.1.tgz#540df9a7ce94f6dea4f1a8fd3be8b711a882efce"
+  integrity sha512-OpilmvRN136lUgOa9F0zpSI6g+PouOmk+YvJQrB+/hAtllLghjjYuoyfUsrF7U6oJ52cxCtAJTPXgZdyyCffrQ==
   dependencies:
     import-meta-resolve "^4.0.0"
 
