@@ -193,16 +193,16 @@
     tiny-glob "^0.2.9"
     undici "~5.26.2"
 
-"@sveltejs/package@2.2.3":
-  version "2.2.3"
-  resolved "https://registry.npmjs.org/@sveltejs/package/-/package-2.2.3.tgz#bcfc360c726a9cdcbaa189e8b997147a1e827db3"
-  integrity sha512-iZEC5qw+2RIjfIAHR3O+IeokJIjVM/ieoxPxj6YmZCwu5JKFADtC4jzjSUJ7GkCMUQ4HqE7u4/3cCxXBocxi8A==
+"@sveltejs/package@2.2.5":
+  version "2.2.5"
+  resolved "https://registry.npmjs.org/@sveltejs/package/-/package-2.2.5.tgz#379ee26fca196255936765a04df5f86d7213e79c"
+  integrity sha512-H0dFDrp7b/tr4zrUzOfqPKHG8y6ceNlGKPfSpp4ym1kTPWP79Mea5rvDlcmsbOS26FmHN/vttubalBdOCGA6qA==
   dependencies:
     chokidar "^3.5.3"
     kleur "^4.1.5"
     sade "^1.8.1"
-    semver "^7.5.3"
-    svelte2tsx "~0.6.19"
+    semver "^7.5.4"
+    svelte2tsx "~0.6.27"
 
 "@sveltejs/vite-plugin-svelte-inspector@^1.0.4":
   version "1.0.4"
@@ -718,9 +718,9 @@ sade@^1.8.1:
   dependencies:
     mri "^1.1.0"
 
-semver@^7.5.3:
+semver@^7.5.4:
   version "7.5.4"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-7.5.4.tgz#483986ec4ed38e1c6c48c34894a9182dbff68a6e"
+  resolved "https://registry.npmjs.org/semver/-/semver-7.5.4.tgz#483986ec4ed38e1c6c48c34894a9182dbff68a6e"
   integrity sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==
   dependencies:
     lru-cache "^6.0.0"
@@ -749,10 +749,10 @@ svelte-hmr@^0.15.3:
   resolved "https://registry.yarnpkg.com/svelte-hmr/-/svelte-hmr-0.15.3.tgz#df54ccde9be3f091bf5f18fc4ef7b8eb6405fbe6"
   integrity sha512-41snaPswvSf8TJUhlkoJBekRrABDXDMdpNpT2tfHIv4JuhgvHqLMhEPGtaQn0BmbNSTkuz2Ed20DF2eHw0SmBQ==
 
-svelte2tsx@~0.6.19:
-  version "0.6.21"
-  resolved "https://registry.yarnpkg.com/svelte2tsx/-/svelte2tsx-0.6.21.tgz#c2ce9857c3d066b818ef47683f4d997d63f9aa28"
-  integrity sha512-v+vvbiy6WDmEQdIkJpvHYxJYG/obALfH0P6CTreYO350q/9+QmFTNCOJvx0O1o59Zpzx1Bqe+qlDxP/KtJSZEA==
+svelte2tsx@~0.6.27:
+  version "0.6.27"
+  resolved "https://registry.npmjs.org/svelte2tsx/-/svelte2tsx-0.6.27.tgz#5b2c21f38608be51cd32de177722f123e57919e5"
+  integrity sha512-E1uPW1o6VsbRz+nUk3fznZ2lSmCITAJoNu8AYefWSvIwE2pSB01i5sId4RMbWNzfcwCQl1DcgGShCPcldl4rvg==
   dependencies:
     dedent-js "^1.0.1"
     pascal-case "^3.1.1"
