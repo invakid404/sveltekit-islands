@@ -116,7 +116,7 @@ export const islandsPreprocessor = (): PreprocessorGroup => {
 				}
 
 				newContent.prepend(
-					`import { Component as _${componentName}, importPath as ${componentName}ImportPath } from "${module}:${componentImport}";`
+					`import { Component as _${componentName}_tmp, importPath as ${componentName}ImportPath } from "${module}:${componentImport}"; const _${componentName} = _${componentName}_tmp.__island;`
 				);
 			});
 

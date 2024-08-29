@@ -108,7 +108,11 @@ export const islandsPlugin = (): Plugin[] => {
 				// NOTE: `importPath` is purposefully empty in build mode, as it is
 				//       only useful for satisfying Vite in serve mode.
 				return `
-					export { default as Component } from "${fullImportPath}";
+					import Component from "${fullImportPath}";
+					export const component = {};
+					Object.defineProperty(component, "__island", {
+						value: Component,
+					});
 					export const importPath = "${resolvedConfig.command === 'serve' ? fullImportPath : ''}";
 				`;
 			},
