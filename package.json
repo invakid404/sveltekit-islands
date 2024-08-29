@@ -35,7 +35,7 @@
 	},
 	"dependencies": {
 		"@11ty/is-land": "4.0.0",
-		"acorn": "8.11.2",
+		"acorn": "8.12.1",
 		"is-subdir": "1.2.0",
 		"magic-string": "0.30.11"
 	},
