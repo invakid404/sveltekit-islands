@@ -50,7 +50,21 @@
 				import * as component from "${script}";
 				import "/${SVELTE_CHUNK}";
 
-				const Component = Object.values(component)[0];
+				const handler = {
+					construct() {
+						return handler;
+					}
+				};
+
+				const isConstructor = (x) => {
+					try {
+						return !!new new Proxy(x, handler)();
+					} catch (e) {
+						return false;
+					}
+				};
+
+				const Component = Object.values(component).find((entry) => isConstructor(entry));
 
 				new Component({
 					target: document.getElementById("${fullId}"),
