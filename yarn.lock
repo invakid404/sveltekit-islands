@@ -288,13 +288,6 @@
     semver "^7.5.4"
     svelte2tsx "~0.7.0"
 
-"@types/acorn@6.0.0":
-  version "6.0.0"
-  resolved "https://registry.npmjs.org/@types/acorn/-/acorn-6.0.0.tgz#7ec9bfdad8e7db4cb03b2b5b05a6f13f77bbc874"
-  integrity sha512-8tSIZoick397hAZIZkiq6R09qNgLjx0CBvmxix3gWyCi6UvXNFjN56xh4e1wTwyYlnTEy32tgo9cooxt6J4lhA==
-  dependencies:
-    acorn "*"
-
 "@types/cookie@^0.6.0":
   version "0.6.0"
   resolved "https://registry.npmjs.org/@types/cookie/-/cookie-0.6.0.tgz#eac397f28bf1d6ae0ae081363eca2f425bedf0d5"
@@ -317,15 +310,15 @@
   dependencies:
     undici-types "~6.19.2"
 
-acorn@*, acorn@^8.10.0, acorn@^8.9.0:
-  version "8.10.0"
-  resolved "https://registry.npmjs.org/acorn/-/acorn-8.10.0.tgz#8be5b3907a67221a81ab23c7889c4c5526b62ec5"
-  integrity sha512-F0SAmZ8iUtS//m8DmCTA0jlh6TDKkHQyK6xc6V4KDTyZKA9dnvX9/3sRTVQrWm79glUAZbnmmNcdYwUIHWVybw==
-
 acorn@8.12.1:
   version "8.12.1"
   resolved "https://registry.npmjs.org/acorn/-/acorn-8.12.1.tgz#71616bdccbe25e27a54439e0046e89ca76df2248"
   integrity sha512-tcpGyI9zbizT9JbV6oYE477V6mTlXvvi0T0G3SNIYE2apm/G5huBa1+K89VGeovbg+jycCrfhl3ADxErOuO6Jg==
+
+acorn@^8.10.0, acorn@^8.9.0:
+  version "8.10.0"
+  resolved "https://registry.npmjs.org/acorn/-/acorn-8.10.0.tgz#8be5b3907a67221a81ab23c7889c4c5526b62ec5"
+  integrity sha512-F0SAmZ8iUtS//m8DmCTA0jlh6TDKkHQyK6xc6V4KDTyZKA9dnvX9/3sRTVQrWm79glUAZbnmmNcdYwUIHWVybw==
 
 anymatch@~3.1.2:
   version "3.1.3"

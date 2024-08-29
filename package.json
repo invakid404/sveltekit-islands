@@ -24,7 +24,6 @@
 		"@sveltejs/adapter-auto": "3.2.4",
 		"@sveltejs/kit": "2.5.25",
 		"@sveltejs/package": "2.3.4",
-		"@types/acorn": "6.0.0",
 		"@types/node": "20.16.2",
 		"prettier": "3.3.3",
 		"prettier-plugin-svelte": "3.2.6",
