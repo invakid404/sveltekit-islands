@@ -22,7 +22,7 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "2.1.1",
-		"@sveltejs/kit": "1.30.4",
+		"@sveltejs/kit": "2.5.25",
 		"@sveltejs/package": "2.2.3",
 		"@types/acorn": "6.0.0",
 		"@types/node": "20.10.1",
