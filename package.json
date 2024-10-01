@@ -15,7 +15,7 @@
 		"./preprocessor": "./preprocessor.js"
 	},
 	"scripts": {
-		"build": "vite build && yarn package",
+		"build": "vite build && pnpm package",
 		"package": "svelte-kit sync && svelte-package",
 		"format": "prettier --plugin prettier-plugin-svelte --write .",
 		"release": "node release.js"
