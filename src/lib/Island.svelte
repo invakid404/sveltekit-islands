@@ -4,22 +4,17 @@
 	import { SVELTE_CHUNK } from './modules.js';
 	import { islandStore } from '$lib/store.js';
 
-	/**
-	 * The component to hydrate
-	 */
-	export let component: Component;
+	type Props = {
+		component: Component<any>;
+		props?: any
+		script?: string;
+		islandId?: string;
+	}
 
-	/**
-	 * The props to pass to the component
-	 */
-	export let props: Record<string, unknown> = {};
-
-	export let script: string | null = null;
-
-	export let islandId: string | null = null;
+	let { component: C, props = {}, script, islandId, ...rest }: Props = $props();
 
 	// Allocate an index and increment
-	let idx: number;
+	let idx = $state<number>();
 	islandStore.update((store) => {
 		idx = store[islandId!] ?? 0;
 
@@ -29,8 +24,7 @@
 		};
 	});
 
-	let fullId: string | null = null;
-	$: fullId = `island-${islandId}-${idx}`;
+	let fullId = $derived(`island-${islandId}-${idx}`);
 </script>
 
 <svelte:head>
@@ -41,8 +35,8 @@
 		`.trim()}
 	{/if}
 </svelte:head>
-<is-land id="{fullId}" {...$$restProps}>
-	<svelte:component this="{component}" {...props} />
+<is-land id={fullId} {...rest}>
+	<C {...props} />
 	<template data-island>
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html `
