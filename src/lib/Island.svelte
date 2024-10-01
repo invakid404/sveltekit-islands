@@ -1,13 +1,13 @@
 <script lang="ts">
 	import * as devalue from 'devalue';
-	import type { ComponentType } from 'svelte';
+	import type { Component } from 'svelte';
 	import { SVELTE_CHUNK } from './modules.js';
 	import { islandStore } from '$lib/store.js';
 
 	/**
 	 * The component to hydrate
 	 */
-	export let component: ComponentType;
+	export let component: Component;
 
 	/**
 	 * The props to pass to the component
