@@ -6,7 +6,7 @@ import type { Element, MustacheTag, TemplateNode } from 'svelte/types/compiler/i
 import crypto from 'crypto';
 import { ISLAND_MODULE_PREFIX } from './modules.js';
 import * as acorn from 'acorn';
-import * as svelte from 'svelte/compiler';
+import { walk } from 'estree-walker';
 import type { ImportDefaultSpecifier } from 'estree';
 
 export const islandsPreprocessor = (): PreprocessorGroup => {
@@ -85,7 +85,7 @@ export const islandsPreprocessor = (): PreprocessorGroup => {
 			const componentImportLocations: Partial<{ [component: string]: string }> = {};
 
 			// Find imports for all components used in islands
-			svelte.walk(node as never, {
+			walk(node as never, {
 				enter(node) {
 					if (node.type !== 'ImportDeclaration' || node.source.type !== 'Literal') {
 						return;

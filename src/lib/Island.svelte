@@ -47,12 +47,12 @@
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html `
 			${'<scr'}ipt type="module">
-				import * as component from "${script}";
+				import * as Component from "${script}";
 				import "/${SVELTE_CHUNK}";
 
-				const Component = Object.values(component).find((entry) => entry != null && entry.__island != null).__island;
+				const component = Object.values(Component).find((entry) => entry != null && entry.__island != null).__island;
 
-				new Component({
+				component({
 					target: document.getElementById("${fullId}"),
 					props: ${devalue.uneval(props)},
 					hydrate: true,
