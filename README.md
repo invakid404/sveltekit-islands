@@ -35,7 +35,7 @@ export const csr = false;
 ```
 
 Second, you must add the Vite plugin to your Vite config and the Svelte preprocessor to your Svelte
-config:
+config. Additionally, you must pass `{ script: true }` to `vitePreprocess`:
 
 ```ts
 // vite.config.(js|ts)
@@ -51,12 +51,12 @@ export default defineConfig({
 ```js
 // svelte.config.js
 import adapter from '@sveltejs/adapter-static';
-import { vitePreprocess } from '@sveltejs/kit/vite';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { islandsPreprocessor } from 'sveltekit-islands/preprocessor';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	preprocess: [vitePreprocess(), islandsPreprocessor()],
+	preprocess: [vitePreprocess({ script: true }), islandsPreprocessor()],
 	kit: {
 		adapter: adapter({
 			pages: 'build',
