@@ -1,6 +1,6 @@
 {
 	"name": "sveltekit-islands",
-	"version": "1.3.6",
+	"version": "1.3.7",
 	"repository": "https://github.com/invakid404/sveltekit-islands.git",
 	"author": "Tsvetomir Bonev <invakid404@riseup.net>",
 	"license": "Unlicense",
