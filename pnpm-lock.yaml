@@ -39,6 +39,9 @@ importers:
       '@sveltejs/package':
         specifier: 2.3.5
         version: 2.3.5(svelte@5.0.0-next.260)(typescript@5.5.4)
+      '@types/estree':
+        specifier: ^1.0.6
+        version: 1.0.6
       '@types/node':
         specifier: 20.16.2
         version: 20.16.2
