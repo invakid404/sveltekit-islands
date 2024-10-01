@@ -109,9 +109,10 @@ export const islandsPlugin = (): Plugin[] => {
 				//       only useful for satisfying Vite in serve mode.
 				return `
 					import Component from "${fullImportPath}";
+					import { hydrate } from "svelte";
 					export const component = {};
 					Object.defineProperty(component, "__island", {
-						value: Component,
+						value: args => hydrate(Component, args)
 					});
 					export const importPath = "${resolvedConfig.command === 'serve' ? fullImportPath : ''}";
 				`;
