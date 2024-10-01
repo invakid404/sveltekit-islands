@@ -42,7 +42,7 @@
 	{/if}
 </svelte:head>
 <is-land id="{fullId}" {...$$restProps}>
-	<svelte:component this="{component}" />
+	<svelte:component this="{component}" {...props} />
 	<template data-island>
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html `
