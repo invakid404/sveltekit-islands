@@ -38,7 +38,7 @@ importers:
         version: 2.6.1(@sveltejs/vite-plugin-svelte@4.0.0-next.7(svelte@5.0.0-next.260)(vite@5.4.2(@types/node@20.16.2)))(svelte@5.0.0-next.260)(vite@5.4.2(@types/node@20.16.2))
       '@sveltejs/package':
         specifier: 2.3.5
-        version: 2.3.5(svelte@5.0.0-next.260)(typescript@5.5.4)
+        version: 2.3.5(svelte@5.0.0-next.260)(typescript@5.7.3)
       '@types/estree':
         specifier: ^1.0.6
         version: 1.0.6
@@ -58,8 +58,8 @@ importers:
         specifier: 5.0.0-next.260
         version: 5.0.0-next.260
       typescript:
-        specifier: 5.5.4
-        version: 5.5.4
+        specifier: 5.7.3
+        version: 5.7.3
       vite:
         specifier: 5.4.2
         version: 5.4.2(@types/node@20.16.2)
@@ -597,8 +597,8 @@ packages:
   tslib@2.7.0:
     resolution: {integrity: sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==}
 
-  typescript@5.5.4:
-    resolution: {integrity: sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==}
+  typescript@5.7.3:
+    resolution: {integrity: sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -818,14 +818,14 @@ snapshots:
       tiny-glob: 0.2.9
       vite: 5.4.2(@types/node@20.16.2)
 
-  '@sveltejs/package@2.3.5(svelte@5.0.0-next.260)(typescript@5.5.4)':
+  '@sveltejs/package@2.3.5(svelte@5.0.0-next.260)(typescript@5.7.3)':
     dependencies:
       chokidar: 4.0.1
       kleur: 4.1.5
       sade: 1.8.1
       semver: 7.6.3
       svelte: 5.0.0-next.260
-      svelte2tsx: 0.7.21(svelte@5.0.0-next.260)(typescript@5.5.4)
+      svelte2tsx: 0.7.21(svelte@5.0.0-next.260)(typescript@5.7.3)
     transitivePeerDependencies:
       - typescript
 
@@ -1084,12 +1084,12 @@ snapshots:
 
   source-map-js@1.2.1: {}
 
-  svelte2tsx@0.7.21(svelte@5.0.0-next.260)(typescript@5.5.4):
+  svelte2tsx@0.7.21(svelte@5.0.0-next.260)(typescript@5.7.3):
     dependencies:
       dedent-js: 1.0.1
       pascal-case: 3.1.2
       svelte: 5.0.0-next.260
-      typescript: 5.5.4
+      typescript: 5.7.3
 
   svelte@5.0.0-next.260:
     dependencies:
@@ -1116,7 +1116,7 @@ snapshots:
 
   tslib@2.7.0: {}
 
-  typescript@5.5.4: {}
+  typescript@5.7.3: {}
 
   undici-types@6.19.8: {}
 
