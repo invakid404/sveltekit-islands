@@ -124,7 +124,11 @@ export const islandsPlugin = (): Plugin[] => {
 				const svelteChunk =
 					target === 'server'
 						? SVELTE_CHUNK
-						: bundleEntries.find(([filename]) => path.basename(filename).startsWith('svelte'))?.[0];
+						: bundleEntries.find(
+								([_, asset]) =>
+									asset.type === 'chunk' &&
+									Object.keys(asset.modules).some((path) => path.startsWith(svelteModule))
+							)?.[0];
 
 				if (svelteChunk == null) {
 					throw new Error('Failed to find Svelte chunk');
