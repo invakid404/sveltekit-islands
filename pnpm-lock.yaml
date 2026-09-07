@@ -19,7 +19,7 @@ importers:
         version: 8.12.1
       devalue:
         specifier: ^5.1.1
-        version: 5.1.1
+        version: 5.6.4
       estree-walker:
         specifier: ^3.0.3
         version: 3.0.3
@@ -409,8 +409,8 @@ packages:
     resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
     engines: {node: '>=0.10.0'}
 
-  devalue@5.1.1:
-    resolution: {integrity: sha512-maua5KUiapvEwiEAe+XnlZ3Rh0GD+qI1J/nb9vrJc3muPXvcF/8gXYTWF76+5DAqHyDUtOIImEuo0YKE9mshVw==}
+  devalue@5.6.4:
+    resolution: {integrity: sha512-Gp6rDldRsFh/7XuouDbxMH3Mx8GMCcgzIb1pDTvNyn8pZGQ22u+Wa+lGV9dQCltFQ7uVw0MhRyb8XDskNFOReA==}
 
   esbuild@0.21.5:
     resolution: {integrity: sha512-mg3OPMV4hXywwpoDxu3Qda5xCKQi+vCTZq8S9J/EpkhB2HzKXq4SNFZE3+NK93JYxc8VMSep+lOUSC/RVKaBqw==}
@@ -805,7 +805,7 @@ snapshots:
       '@sveltejs/vite-plugin-svelte': 4.0.0-next.7(svelte@5.0.0-next.260)(vite@5.4.2(@types/node@20.16.2))
       '@types/cookie': 0.6.0
       cookie: 0.6.0
-      devalue: 5.1.1
+      devalue: 5.6.4
       esm-env: 1.0.0
       import-meta-resolve: 4.1.0
       kleur: 4.1.5
@@ -893,7 +893,7 @@ snapshots:
 
   deepmerge@4.3.1: {}
 
-  devalue@5.1.1: {}
+  devalue@5.6.4: {}
 
   esbuild@0.21.5:
     optionalDependencies:
