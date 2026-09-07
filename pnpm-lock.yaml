@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@11ty/is-land':
-        specifier: 4.0.0
-        version: 4.0.0
+        specifier: 4.0.1
+        version: 4.0.1
       '@sveltejs/vite-plugin-svelte':
         specifier: 4.0.0-next.7
         version: 4.0.0-next.7(svelte@5.0.0-next.260)(vite@5.4.2(@types/node@20.16.2))
@@ -66,8 +66,8 @@ importers:
 
 packages:
 
-  '@11ty/is-land@4.0.0':
-    resolution: {integrity: sha512-RxbjF2+FzSu3rerHrWLRsvsPX2YM47RwXpdWCCzLhwRSsz5sJe9TnK7mphEld1gZnp2GeD5ByvhqjIc4CqidsQ==}
+  '@11ty/is-land@4.0.1':
+    resolution: {integrity: sha512-Qo4qHgqaur1eOIMbjlAPIz5/rFBs6c1AyfU09qJQ1pVY0m8B29+XOIbXCdVO3zqPQq04ZgAhqrQB7QgqVWvmsA==}
 
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
@@ -652,7 +652,7 @@ packages:
 
 snapshots:
 
-  '@11ty/is-land@4.0.0': {}
+  '@11ty/is-land@4.0.1': {}
 
   '@ampproject/remapping@2.3.0':
     dependencies:
