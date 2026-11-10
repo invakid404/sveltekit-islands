@@ -21,7 +21,7 @@
 		"release": "node release.js"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "3.2.5",
+		"@sveltejs/adapter-auto": "3.3.1",
 		"@sveltejs/kit": "2.6.1",
 		"@sveltejs/package": "2.3.5",
 		"@types/estree": "^1.0.6",
